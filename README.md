@@ -1,7 +1,5 @@
 # Gatsby + Netlify CMS Starter
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b654c94e-08a6-4b79-b443-7837581b1d8d/deploy-status)](https://app.netlify.com/sites/gatsby-starter-netlify-cms-ci/deploys)
-
 **Note:** This starter uses [Gatsby v2](https://www.gatsbyjs.org/blog/2018-09-17-gatsby-v2/).
 
 This repo contains an example business website that is built with [Gatsby](https://www.gatsbyjs.org/), and [Netlify CMS](https://www.netlifycms.org): **[Demo Link](https://gatsby-netlify-cms.netlify.com/)**.
@@ -38,6 +36,10 @@ Netlify CMS can run in any frontend web environment, but the quickest way to try
 
 After clicking that button, you’ll authenticate with GitHub and choose a repository name. Netlify will then automatically create a repository in your GitHub account with a copy of the files from the template. Next, it will build and deploy the new site on Netlify, bringing you to the site dashboard when the build is complete. Next, you’ll need to set up Netlify’s Identity service to authorize users to log in to the CMS.
 
+
+### How Does this Work?
+
+Gatsby auto-generates pages based on template files. Pages are rendered via markdown files in the `pages/` directory using the `gatsby-transform-remark` [plugin described in this documentation](https://www.gatsbyjs.com/docs/how-to/routing/adding-markdown-pages/). 
 ### Access Locally
 
 Pulldown a local copy of the Github repository Netlify created for you, with the name you specified in the previous step
@@ -99,6 +101,8 @@ $ npm run serve
 ```
 
 ### Setting up the CMS
+
+[Netlify CMS Config Documentation](https://www.netlifycms.org/docs/configuration-options/)
 
 Follow the [Netlify CMS Quick Start Guide](https://www.netlifycms.org/docs/quick-start/#authentication) to set up authentication, and hosting.
 
