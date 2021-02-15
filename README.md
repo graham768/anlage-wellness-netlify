@@ -1,10 +1,6 @@
-# Gatsby + Netlify CMS Starter
+# Anlage Wellness
 
-**Note:** This starter uses [Gatsby v2](https://www.gatsbyjs.org/blog/2018-09-17-gatsby-v2/).
-
-This repo contains an example business website that is built with [Gatsby](https://www.gatsbyjs.org/), and [Netlify CMS](https://www.netlifycms.org): **[Demo Link](https://gatsby-netlify-cms.netlify.com/)**.
-
-It follows the [JAMstack architecture](https://jamstack.org) by using Git as a single source of truth, and [Netlify](https://www.netlify.com) for continuous deployment, and CDN distribution.
+This website uses [Gatsby v2](https://www.gatsbyjs.org/blog/2018-09-17-gatsby-v2/) and [Netlify CMS](https://www.netlifycms.org). It follows the [JAMstack architecture](https://jamstack.org) by using Git as a single source of truth, and [Netlify](https://www.netlify.com) for continuous deployment, and CDN distribution.
 
 ## Features
 
@@ -18,9 +14,9 @@ It follows the [JAMstack architecture](https://jamstack.org) by using Git as a s
 - Uses `gatsby-image` with Netlify-CMS preview support
 - Separate components for everything
 - Netlify deploy configuration
-- Netlify function support, see `lambda` folder
-- Perfect score on Lighthouse for SEO, Accessibility and Performance (wip:PWA)
-- ..and more
+- Stripe Subscription Support
+- Netlify functions for handling authentication and stripe subscriptions (see `lambda` folder)
+- Perfect score on Lighthouse for SEO, Accessibility and Performance
 
 ## Prerequisites
 
@@ -28,29 +24,21 @@ It follows the [JAMstack architecture](https://jamstack.org) by using Git as a s
 - [Gatsby CLI](https://www.gatsbyjs.org/docs/)
 - [Netlify CLI](https://github.com/netlify/cli)
 
-## Getting Started (Recommended)
+# Getting Started
+## How Does this Work?
 
-Netlify CMS can run in any frontend web environment, but the quickest way to try it out is by running it on a pre-configured starter site with Netlify. The example here is the Kaldi coffee company template (adapted from [One Click Hugo CMS](https://github.com/netlify-templates/one-click-hugo-cms)). Use the button below to build and deploy your own copy of the repository:
+Gatsby auto-generates pages based on template files. Pages are rendered using markdown files and templates in the `pages/` directory with the `gatsby-transform-remark` [plugin described in this documentation](https://www.gatsbyjs.com/docs/how-to/routing/adding-markdown-pages/). Netlify Identity Admins can make content changes to the site by going to `https://anlage-wellness.com/admin` and logging in with their Netlify Identity information. The admin UI is created using the file `static/admin/config.yml` and more details can be found in [Understanding the CMS](#understanding-the-cms)
 
-<a href="https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/gatsby-starter-netlify-cms&amp;stack=cms"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify"></a>
+## Access Locally
 
-After clicking that button, you’ll authenticate with GitHub and choose a repository name. Netlify will then automatically create a repository in your GitHub account with a copy of the files from the template. Next, it will build and deploy the new site on Netlify, bringing you to the site dashboard when the build is complete. Next, you’ll need to set up Netlify’s Identity service to authorize users to log in to the CMS.
-
-
-### How Does this Work?
-
-Gatsby auto-generates pages based on template files. Pages are rendered via markdown files in the `pages/` directory using the `gatsby-transform-remark` [plugin described in this documentation](https://www.gatsbyjs.com/docs/how-to/routing/adding-markdown-pages/). 
-### Access Locally
-
-Pulldown a local copy of the Github repository Netlify created for you, with the name you specified in the previous step
 ```
-$ git clone https://github.com/[GITHUB_USERNAME]/[REPO_NAME].git
-$ cd [REPO_NAME]
 $ yarn
 $ netlify dev # or ntl dev
 ```
 
-This uses the new [Netlify Dev](https://www.netlify.com/products/dev/?utm_source=blog&utm_medium=netlifycms&utm_campaign=devex) CLI feature to serve any functions you have in the `lambda` folder.
+This uses the new [Netlify Dev](https://www.netlify.com/products/dev/?utm_source=blog&utm_medium=netlifycms&utm_campaign=devex) CLI feature to serve any functions you have in the `lambda` folder at `<your-local-domain>/.netlify/functions/<function-name>`
+
+Rename `.env.template` to `.env` to define environment variables for these functions locally. Note that this file shouldn't be checked into the repo because it can contain secrets used by the function.
 
 To test the CMS locally, you'll need to run a production build of the site:
 
@@ -59,7 +47,13 @@ $ npm run build
 $ netlify dev # or ntl dev
 ```
 
-### Media Libraries (installed, but optional)
+## Authorization
+
+The site uses Netlify Identity with their recommended custom wrapper [gotrue-js](https://github.com/netlify/gotrue-js) for signup, login, signout, and getting the current user. When a user upgrades their Stripe subscription, their Netlify Identity "role" is also upgraded using this library. The role is named to reflect the subscription tier they're in and can be used in the future to determine what data they have access to on the site (blog info, check-in forms, useful wellness tools, etc)
+
+If certain routes in the app should be protected (ex. /app/dashboard) from unauthenticated users, see [Gatsby Private Routes](https://www.gatsbyjs.com/docs/how-to/routing/client-only-routes-and-user-authentication/)
+
+## Media Libraries (installed, but optional)
 
 Media Libraries have been included in this starter as a default. If you are not planning to use `Uploadcare` or `Cloudinary` in your project, you **can** remove them from module import and registration in `src/cms/cms.js`. Here is an example of the lines to comment or remove them your project.
 
@@ -91,22 +85,13 @@ OR
 ```
 yarn remove netlify-cms-media-library-cloudinary
 ```
-## Getting Started (Without Netlify)
-
-```
-$ gatsby new [SITE_DIRECTORY_NAME] https://github.com/netlify-templates/gatsby-starter-netlify-cms/
-$ cd [SITE_DIRECTORY_NAME]
-$ npm run build
-$ npm run serve
-```
-
-### Setting up the CMS
+# Understanding the CMS
 
 [Netlify CMS Config Documentation](https://www.netlifycms.org/docs/configuration-options/)
 
 Follow the [Netlify CMS Quick Start Guide](https://www.netlifycms.org/docs/quick-start/#authentication) to set up authentication, and hosting.
 
-## Debugging
+# Troubleshooting
 
 Windows users might encounter `node-gyp` errors when trying to npm install.
 To resolve, make sure that you have both Python 2.7 and the Visual C++ build environment installed.
@@ -120,11 +105,6 @@ npm install --global --production windows-build-tools
 
 MacOS users might also encounter some errors, for more info check [node-gyp](https://github.com/nodejs/node-gyp). We recommend using the latest stable node version.
 
-## Purgecss
+# Purgecss
 
 This plugin uses [gatsby-plugin-purgecss](https://www.gatsbyjs.org/packages/gatsby-plugin-purgecss/) and [bulma](https://bulma.io/). The bulma builds are usually ~170K but reduced 90% by purgecss.
-
-# CONTRIBUTING
-
-Contributions are always welcome, no matter how large or small. Before contributing,
-please read the [code of conduct](CODE_OF_CONDUCT.md).
