@@ -1,7 +1,7 @@
 ---
 templateKey: index-page
 title: "Less stress, more progress. "
-image: /img/home-jumbotron.jpg
+image: /img/screenshot-6-.png
 heading: Great coffee with a conscience
 subheading: The way training should be.
 mainpitch:
