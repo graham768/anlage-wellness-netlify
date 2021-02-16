@@ -3,13 +3,11 @@ templateKey: about-page
 path: /about
 title: "Hiya, I'm Dacia! "
 ---
-
-
 ![](/img/img_20210213_111354_541-1-.jpg)
 
 ### Optimal Performance Coach + Personal Trainer + Outdoor Enthusiast + People Lover (...Most of the time. I am an INFJ after all)
 
-Baths and quiet mornings are as important to me as friend-filled adventures. I’ve built my life around being able to say “fuck yes” to the opportunities that excite me most. Oh, and I tend to swear a bit.
+Baths and quiet mornings are as important to me as friend-filled adventures. Oh, and I tend to swear a bit. 
 
 ### Blah. 
 
