@@ -1,9 +1,9 @@
 ---
 templateKey: index-page
-title: Great Coffee with a Conscience
+title: "Less stress, more progress. "
 image: /img/home-jumbotron.jpg
 heading: Great coffee with a conscience
-subheading: Support sustainable farming while enjoying a cup
+subheading: The way training should be.
 mainpitch:
   title: Why Kaldi
   description: >
